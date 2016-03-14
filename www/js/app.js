@@ -169,8 +169,8 @@ myApp.factory('resultsFB', ["roundService","FirebaseUrl" ,"$firebaseArray",
 
 //CONTROLLERS
 
-myApp.controller('drawJson', ["$scope", "$http", "userService", "roundService", "FirebaseUrl", "$firebaseArray",
-function($scope, $http, userService, roundService, FirebaseUrl, $firebaseArray) {
+myApp.controller('drawJson', ["$scope", "$http", "userService", "userIDService", "roundService", "FirebaseUrl", "$firebaseArray",
+function($scope, $http, userService, userIDService, roundService, FirebaseUrl, $firebaseArray) {
     $scope.roundNumber = roundService.get();
     $http.get('draw2016.json', { cache: true}).then(function(res){
             $scope.draw = res.data;    
@@ -281,17 +281,21 @@ function($scope, $http, userService, roundService, FirebaseUrl, $firebaseArray) 
         };
     };
     
+
+    
     $scope.savetips = true;
     $scope.saveMessage = false;
     $scope.sendMessage = false;
     $scope.saveTips = function() {
+        checkIfTipExists();
         $scope.savetips = false;
         $scope.saveMessage = true;
         newName = userService.get();
+        userID = userIDService.get();
         roundNumber = roundService.get();
         console.log("savetips");
         console.log("tips for "+ newName);
-        fbURL = FirebaseUrl+ 'tips' + '/' + newName + '/' + 'round' + roundNumber;
+        fbURL = FirebaseUrl+ 'tips' + '/' + userID + '/' + newName + '/' + 'round' + roundNumber;
         console.log("save tips to "+fbURL);
         var ref = new Firebase(fbURL);
         var tips = $firebaseArray(ref);
@@ -332,7 +336,7 @@ function($scope, $http, userService, roundService, FirebaseUrl, $firebaseArray) 
     
 }]);
 
-myApp.controller("startUP", function($scope, $http, Groups, Users, roundService, userService, groupService, deviceIDService, userPhotoService) {
+myApp.controller("startUP", function($scope, $http, Groups, Users, roundService, userService, userIDService, groupService, deviceIDService, userPhotoService) {
     //roundService.set(1);
     $scope.userName = userService.get();
     $scope.userPhoto = userPhotoService.get();
@@ -415,11 +419,27 @@ myApp.controller("startUP", function($scope, $http, Groups, Users, roundService,
     }
 });
     
-    $scope.setUser = function(uName, uPhoto) {
+    $scope.setUser = function(uName, uID, uPhoto) {
         console.log("setUser clicked");
         userService.set(uName);
+        userIDService.set(uID);
         userPhotoService.set(uPhoto);
         };
+        
+   
+    $scope.checkTips = function() {
+        console.log("check Tips clicked");
+        userID = userIDService.get();
+        userName = userService.get();
+        roundNumber = roundService.get();
+        var TIPS_LOCATION = 'https://flickering-fire-9394.firebaseio.com/tips/' + userID + '/' + userName + '/' + 'round' + roundNumber;
+        var tipsRef = new Firebase(TIPS_LOCATION);
+        tipsRef.once('value', function(snapshot) {
+        var exists = (snapshot.val() !== null);
+        console.log("checkIfTipExists  - " + exists);
+        //tipExistsCallback(tipId, exists);
+      });
+    };
     
 });
 
@@ -540,10 +560,11 @@ myApp.controller("ladderDB", ["$scope", "roundService", "$firebaseArray",
   }
 ]);
 
-myApp.controller("tipsDB", ["$scope", "$route", "$timeout", "tipsFB", "resultsFB", "userService", "roundService","FirebaseUrl" ,"$firebaseArray",
-    function($scope, $route, $timeout, tipsFB, resultsFB, userService, roundService, FirebaseUrl , $firebaseArray) {
+myApp.controller("tipsDB", ["$scope", "$route", "$timeout", "tipsFB", "resultsFB", "userService", "userIDService", "roundService","FirebaseUrl" ,"$firebaseArray",
+    function($scope, $route, $timeout, tipsFB, resultsFB, userService, userIDService, roundService, FirebaseUrl , $firebaseArray) {
     $scope.loading = true;
     $scope.userName = userService.get();
+    $scope.uID = userIDService.get();
     $scope.roundNumber= roundService.get();
     
     //set initial tips to show
@@ -580,7 +601,7 @@ myApp.controller("tipsDB", ["$scope", "$route", "$timeout", "tipsFB", "resultsFB
         return winners;
     };
     
-    var fburl = FirebaseUrl+ 'tips' + '/' + userName+ '/' + 'round' + roundNumber;
+    var fburl = FirebaseUrl+ 'tips' + '/' + $scope.uID + '/' + userName + '/' + 'round' + roundNumber;
     var ref = new Firebase(fburl);
     var FBtips = $firebaseArray(ref);
     $scope.tips = [];
@@ -591,7 +612,7 @@ myApp.controller("tipsDB", ["$scope", "$route", "$timeout", "tipsFB", "resultsFB
     obj.$loaded().then(function() {
         $scope.winners = getWinners(obj, $scope.tips);
         var rNumber = roundNumber - 1;
-        var prevFBurl = FirebaseUrl+ 'tips' + '/' + userName+ '/' + 'round' + rNumber;
+        var prevFBurl = FirebaseUrl+ 'tips' + '/' + $scope.uID + '/' + userName + '/' + 'round' + rNumber;
         var prevRef = new Firebase(prevFBurl);
         var prevFBtips = $firebaseArray(prevRef);
         prevTips = [];
@@ -627,7 +648,7 @@ myApp.controller("tipsDB", ["$scope", "$route", "$timeout", "tipsFB", "resultsFB
                         //$scope.$apply;
                         //$route.reload();
                         $scope.loading = true;    
-                        var fburl = FirebaseUrl+ 'tips' + '/' + $scope.userName+ '/' + 'round' + roundNumber;
+                        var fburl = FirebaseUrl+ 'tips' + '/' + $scope.uID + '/' + $scope.userName + '/' + 'round' + roundNumber;
                         console.log("getting tips form "+ fburl);
                         var ref = new Firebase(fburl);
                         var FBtips = $firebaseArray(ref);
@@ -641,7 +662,7 @@ myApp.controller("tipsDB", ["$scope", "$route", "$timeout", "tipsFB", "resultsFB
                                 $scope.winners = getWinners(obj, $scope.tips);
                                 //get previous round
                                 var rNumber = roundNumber - 1;
-                                var prevFBurl = FirebaseUrl+ 'tips' + '/' + $scope.userName+ '/' + 'round' + rNumber;
+                                var prevFBurl = FirebaseUrl+ 'tips' + '/' + $scope.uID + '/' + $scope.userName + '/' + 'round' + rNumber;
                                 console.log("getting tips form "+ prevFBurl);
                                 var prevRef = new Firebase(prevFBurl);
                                 var prevFBtips = $firebaseArray(prevRef);
