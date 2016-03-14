@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" id="com.example.footytips" version="1.3.3">
+  <name>FootyTips</name>
+  <description/>
+  <author/>
+  <content src="index.html"/>
+  <allow-navigation href="*"/>
+  <allow-intent href="itms:*"/>
+  <allow-intent href="itms-apps:*"/>
+  <preference name="loglevel" value="DEBUG"/>
+  <preference name="AndroidLaunchMode" value="singleTop"/>
+  <preference name="ErrorUrl" value=""/>
+  <preference name="SplashScreen" value="screen"/>
+  <preference name="AllowInlineMediaPlayback" value="false"/>
+  <preference name="AutoHideSplashScreen" value="true"/>
+  <preference name="BackupWebStorage" value="cloud"/>
+  <preference name="EnableViewportScale" value="false"/>
+  <preference name="FadeSplashScreen" value="true"/>
+  <preference name="FadeSplashScreenDuration" value=".25"/>
+  <preference name="KeyboardDisplayRequiresUserAction" value="true"/>
+  <preference name="MediaPlaybackRequiresUserAction" value="false"/>
+  <preference name="ShowSplashScreenSpinner" value="false"/>
+  <preference name="SuppressesIncrementalRendering" value="false"/>
+  <preference name="TopActivityIndicator" value="gray"/>
+  <preference name="GapBetweenPages" value="0"/>
+  <preference name="PageLength" value="0"/>
+  <preference name="PaginationBreakingMode" value="page"/>
+  <preference name="PaginationMode" value="unpaginated"/>
+  <feature name="LocalStorage">
+    <param name="ios-package" value="CDVLocalStorage"/>
+  </feature>
+  <preference name="UIWebViewDecelerationSpeed" value="normal"/>
+  <preference name="monaca:targetFamilyiPhone" value="1"/>
+  <preference name="monaca:targetFamilyiPad" value="1"/>
+  <preference name="monaca:MonacaBackendUrl" value="https://cloud.monaca.mobi/json-rpc/"/>
+  <preference name="monaca:MonacaBackendId" value="5672927cfd17343e7cf26852"/>
+  <preference name="monaca:MonacaBackendApiKey" value="cf44c64f5fc0dcc043085ddef68239b30990350431f3b97a7d3de76cd8462990"/>
+  <preference name="monaca:WebViewEngine" value="default"/>
+  <access origin="*"/>
+  <preference name="KeepRunning" value="true"/>
+  <preference name="monaca:AndroidIsPackageNameSeparate" value="false"/>
+  <preference name="DisallowOverscroll" value="true"/>
+  <preference name="Orientation" value="portrait"/>
+  <preference name="SplashScreenDelay" value="1000"/>
+  <preference name="Fullscreen" value="false"/>
+</widget>

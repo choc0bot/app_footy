@@ -1,0 +1,108 @@
+<ons-page ng-controller="setting" modifier="material">
+    <ons-toolbar modifier="material">
+    <div class="left">
+        <ons-toolbar-button ng-click="app.slidingMenu.toggleMenu()" modifier="material"><ons-icon icon="bars"></ons-icon></ons-toolbar-button>
+    </div>
+    <div class="center">Settings</div>
+    </ons-toolbar>
+
+
+  <ons-row class="profile-wrapper" modifier="material">
+    <ons-col width="60px" class="profile-image-wrapper" modifier="material">
+      <img src="{{ users.photo }}" class="profile-image">
+    </ons-col>
+
+    <ons-col modifier="material">
+      <div class="profile-name">{{ userName }}</div>
+    </ons-col>
+
+  </ons-row>
+
+  <div class="settings-header" modifier="material">Share</div>
+
+  <ons-list modifier="inset" class="settings-list" modifier="material">
+    <ons-list-item modifier="material">
+      Notifications &nbsp;
+      <label class="switch switch--material">
+      <input type="checkbox" class="switch__input switch--material__input" checked>
+      <div class="switch__toggle switch--material__toggle">
+        <div class="switch__handle switch--material__handle"></div>
+      </div>
+    </label>
+    </ons-list-item>
+  </ons-list>
+
+  <div class="settings-header" modifier="material">Others</div>
+
+  <ons-list modifier="inset" class="settings-list" modifier="material">
+    <ons-list-item modifier="chevron">
+      Change Photo
+    </ons-list-item>
+  </ons-list>
+  <ons-list modifier="inset" class="settings-list" modifier="material">
+    <ons-list-item modifier="chevron">
+      Change Default Email to send tips
+    </ons-list-item>
+  </ons-list>
+
+  <br>
+
+  <ons-list modifier="inset" class="settings-list" modifier="material">
+  
+    <ons-list-item modifier="tappable" onclick="app.slidingMenu.setMainPage('users.html', {closeMenu: true})">
+      <ons-icon icon="ion-log-out" style="opacity: 0.8" modifier="material"></ons-icon>
+      Sign out
+    </ons-list-item>
+    
+  </ons-list>
+  
+  <br>
+  
+    <ons-list modifier="inset" class="settings-list" modifier="material">
+    <ons-list-item modifier="tappable" >
+      <ons-icon icon="ion-trash-a" style="opacity: 0.8" modifier="material"></ons-icon>
+      Delete User
+    </ons-list-item>
+  </ons-list>
+  
+</ons-page>
+
+<style>
+.profile-wrapper {
+  padding: 16px 10px 0 10px;
+}
+
+.profile-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border: inset 1px rgba(0, 0, 0, 0.3);
+}
+
+.profile-name {
+  font-size: 18px;
+  padding: 4px 0 2px 0;
+}
+
+.profile-email {
+  font-size: 15px;
+  opacity: 0.4;
+}
+
+.switch--list-item {
+  margin-right: 0px;
+}
+
+.settings-header {
+  font-weight: 500;
+  font-size: 14px;
+  opacity: 0.4;
+  padding: 10px 0 0px 10px;
+  margin-bottom: -4px;
+}
+
+.settings-list {
+  margin-top: 10px;
+}
+</style>

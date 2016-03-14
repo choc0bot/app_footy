@@ -1,0 +1,48 @@
+<ons-navigator>
+   <ons-page ng-controller="startUP" modifier="material">
+        <ons-toolbar modifier="material">
+            <div class="left">
+                <ons-toolbar-button ng-click="app.slidingMenu.toggleMenu()" modifier="material"><ons-icon icon="bars"></ons-icon></ons-toolbar-button>
+            </div>
+            <div class="center">Home</div>
+        </ons-toolbar>
+        <div class="hidden">
+            <li ng-repeat="group in groups"> {{ group.deviceID }} {{ groupName }}</li>        
+        </div>
+
+        <div style="text-align: center" >
+            <div ng-show="loading" style="text-align: center">
+            <br>
+            <br>
+            Loading Users please wait ...
+            <br>
+            <br>
+            <br>
+            <br>
+                <svg class="progress-circular" >
+                    <circle class="progress-circular__primary" cx="50%" cy="50%" r="40%" fill="none" stroke-width="10%" stroke-miterlimit="20"/>
+                </svg>
+                <!-- <img id="mySpinner" width="100%" src="./images/progress.gif"  /> -->
+            </div> 
+        </div>
+        <div ng-hide="loading" style="text-align: center">
+            <div class="profile-card">
+            <div class="profile-name"><h2>{{ userName }}</h2></div>
+                <img src="{{ userPhoto }}" class="profile-image">
+            </div>
+            <br />
+            <br />
+            <button class="button button--material" onclick="app.slidingMenu.setMainPage('round.html', {closeMenu: true})">
+                Tip this round
+            </button>
+            <br>
+            <br>
+            <button class="button button--material" onclick="app.slidingMenu.setMainPage('my_tips.html', {closeMenu: true})">
+                Check your Results
+            </button>
+
+        </div>
+        <div id="preload_area">
+        </div>
+    </ons-page>
+</ons-navigator>

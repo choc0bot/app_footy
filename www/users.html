@@ -1,0 +1,49 @@
+<ons-navigator>
+   <ons-page ng-controller="startUP" modifier="material">
+        <ons-toolbar modifier="material">
+
+            <div class="center">Select User from {{ groupName }}</div>
+        </ons-toolbar>
+        <div class="hidden">
+            <li ng-repeat="group in groups"> {{ group.deviceID }} {{ groupName }}</li>        
+        </div>
+
+        <div style="text-align: center" >
+            <h5>Tap user to start</h5>
+        </div>
+        <div ng-show="loading" style="text-align: center">
+        <br>
+        <br>
+        Loading Users please wait ...
+        <br>
+        <br>
+        <br>
+        <br>
+            <svg class="progress-circular" >
+                <circle class="progress-circular__primary" cx="50%" cy="50%" r="40%" fill="none" stroke-width="10%" stroke-miterlimit="20"/>
+            </svg>
+            <!-- <img id="mySpinner" width="100%" src="./images/progress.gif"  /> -->
+        </div> 
+        <div>
+            <div class="card" ng-repeat="user in users | filter: { group: groupName }">
+                <ons-row class="profile-wrapper" modifier="material" ng-click ="setUser(user.name, user.photo)" onclick="app.slidingMenu.setMainPage('home.html', {closeMenu: true})">
+                    <ons-col width="100px" class="profile-image-wrapper" modifier="material">
+                      <img src="{{user.photo}}" class="thumbnail">
+                    </ons-col>
+                
+                    <ons-col modifier="material">
+                      <div class="profile-name">{{ user.name }} {{user.$id}}</div>
+                    </ons-col>
+                </ons-row>
+            </div>
+        </div>
+        
+        <button class="fab" onclick="app.slidingMenu.setMainPage('newuser.html', {closeMenu: true})">+</button>
+        
+        <!--
+        <ons-fab position="right bottom" class="contact-interface" onclick="app.slidingMenu.setMainPage('newuser.html', {closeMenu: true})">
+        -->
+        <div id="preload_area">
+        </div>
+    </ons-page>
+</ons-navigator>

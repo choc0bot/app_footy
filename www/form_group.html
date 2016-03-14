@@ -1,0 +1,39 @@
+
+<ons-page modifier="material">
+
+    <ons-toolbar modifier="material">
+        <div class="left">
+            <ons-toolbar-button modifier="material" ng-click="app.slidingMenu.toggleMenu()"><ons-icon icon="bars"></ons-icon></ons-toolbar-button>
+        </div>
+    </ons-toolbar>
+    
+        <div ng-controller="groupDB" style="text-align: center">
+        <h3>This device hasn't joined a group</h3>
+        <h5>Enter an existing group name or type a name to create a new group</h5>
+            <form ng-submit="submitGroup()" modifier="material">
+                <br>
+                <input class="text-input--material" ng-model="name" type="text"  placeholder="enter group name" value="" type="text" required>
+                <br>
+                <br>
+                <br>
+                <br>
+                <button ng-show="submit" class="button button--material" type="submit" id="submit" value="Submit">Submit</button>
+            </form>
+            <div ng-show="loading" style="text-align: center"> 
+                Registering your group.
+                <br>
+                <br>
+                <br>
+                <br>
+                    <svg class="progress-circular" >
+                        <circle class="progress-circular__primary" cx="50%" cy="50%" r="40%" fill="none" stroke-width="10%" stroke-miterlimit="20"/>
+                    </svg>
+                    <!-- <img id="mySpinner" width="100%" src="./images/progress.gif"  /> <--></-->
+            </div> 
+        <pre>
+        {{ message }}
+        </pre>
+        
+    </div>
+
+</ons-page>

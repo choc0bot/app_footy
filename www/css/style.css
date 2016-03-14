@@ -1,0 +1,246 @@
+.hidden {
+    display: none;
+}
+.ladderRow {
+  border-bottom: 1px solid #ccc;
+}
+.fab {
+    right: 10px;
+    position: fixed;
+    bottom: 120px; /* Adjust to where you want it */
+    right: 20px; /* Adjust to where you want it */
+}
+.card {
+    font-weight: bold;
+    margin: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    background-color: white;
+    width: 88%;
+    padding: 10px;
+}
+.fa-check {
+  color: green;
+}
+.fa-times {
+  color: red;
+}
+.selected {
+    border-style: solid;
+    border-width: 10px;
+    background-color: #C30; 
+    border: medium solid #FF0; 
+    padding-top: 5px; padding-right: 7px; padding-bottom: 7px; padding-left: 7px; 
+    color: #FFF;
+    text-align: center; 
+    animation-name: homeCycle; 
+    animation-duration:6s; 
+    animation-direction:alternate; 
+    animation-iteration-count:infinite; 
+
+-webkit-animation-name: homeCycle; 
+-webkit-animation-duration:6s; 
+-webkit-animation-direction:alternate; 
+-webkit-animation-iteration-count:infinite; }    
+
+@keyframes homeCycle 
+{
+0% {background-color:#006;} 
+25% {background-color:#060;} 
+50% {background-color:#CC3200;} 
+75% {background-color:#603;} 
+} 
+
+@-webkit-keyframes homeCycle 
+{ 
+0% {background-color:#006;} 
+25% {background-color:#060;} 
+50% {background-color:#CC3200;} 
+75% {background-color:#603;} 
+}
+
+#preload_area
+{
+background-image: url('../images/adelaide.jpg');
+background-image: url('../images/brisbane.jpg');
+background-image: url('../images/bulldogs.jpg');
+background-image: url('../images/carlton.jpg');
+background-image: url('../images/collingwood.jpg');
+background-image: url('../images/essendon.jpg');
+background-image: url('../images/fremantle.jpg');
+background-image: url('../images/gc.jpg');
+background-image: url('../images/geelong.jpg');
+background-image: url('../images/gws.jpg');
+background-image: url('../images/hawthorn.jpg');
+background-image: url('../images/melbourne.jpg');
+background-image: url('../images/north.jpg');
+background-image: url('../images/port.jpg');
+background-image: url('../images/richmond.jpg');
+background-image: url('../images/stkilda.jpg');
+background-image: url('../images/sydney.jpg');
+background-image: url('../images/wce.jpg');
+}
+
+/* front page user list*/
+.list-item-container {
+  line-height: 1;
+  padding: 15px 0px 15px 15px;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  border-radius: 4px;
+}
+
+.location {
+  font-size: 14px;
+  opacity: 0.4;
+  margin-bottom: 6px;
+}
+
+.desc {
+  line-height: 1.2;
+  font-size: 13px;
+}
+
+/* END front page user list*/
+
+
+.team {
+    text-align: center;
+}
+.teamImage {
+    max-height: 250px;
+    width: 80%;
+}
+.teampic {
+    max-height: 100%;
+    min-width: 90%;
+}
+.round {
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+}
+.versus {
+    font-weight: bold;
+    text-align: center;
+}
+.selected {
+  border: solid;
+  border-width: 4px;
+  border-color: red;
+}
+
+.profile-card {
+  width: 100%;
+  text-align: center;
+  color: white;
+  padding: 30px 0;
+  line-height: 1.4;
+  background-color: #33393c;
+  text-shadow: rgba(0, 0, 0, 0.4) 0px 1px 0px;
+}
+
+.profile-image {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  background-color: black;
+  border 1px solid white;
+  box-shadow:rgba(0, 0, 0, 0.2) 0px 2px 0px 0px;
+  -webkit-box-shadow:rgba(0, 0, 0, 0.2) 0px 2px 0px 0px;
+}
+
+/* ladder images */
+#adelaide {
+    background: url('../images/afl-icons.jpg') no-repeat -674px -385px;
+	width: 70px;
+    height: 50px;
+}
+#brisbane {
+    background: url('../images/afl-icons.jpg') -674px -242px;
+    width: 70px;
+    height: 48px;
+}
+#bulldogs {
+    background: url('../images/afl-icons.jpg') no-repeat -256px -385px;
+    width: 70px;
+    height: 50px;
+}
+#carlton {
+    background: url('../images/afl-icons.jpg') no-repeat -256px -242px;
+    width: 70px;
+    height: 50px;
+}
+#collingwood {
+    background: url('../images/afl-icons.jpg') no-repeat -256px -98px;
+	width: 70px;
+    height: 50px;
+}
+#essendon {
+    background: url('../images/afl-icons.jpg') no-repeat -115px -385px;
+    width: 70px;
+    height: 50px;
+}
+#fremantle {
+    background: url('../images/afl-icons.jpg') no-repeat -115px -98px;
+    width: 70px;
+    height: 50px;
+}
+#geelong {
+    background: url('../images/afl-icons.jpg') no-repeat -396px -98px;
+    width: 70px;
+    height: 50px;
+}
+#gc {
+    background: url('../images/afl-icons.jpg') no-repeat -536px -242px;
+    width: 70px;
+    height: 50px;
+}
+#gws {
+    background: url('../images/afl-icons.jpg') no-repeat -814px -385px;
+    width: 70px;
+    height: 50px;
+}
+#hawthorn {
+    background: url('../images/afl-icons.jpg') no-repeat -536px -385px;
+    width: 70px;
+    height: 50px;
+}
+#melbourne {
+    background: url('../images/afl-icons.jpg') no-repeat -536px -98px;
+    width: 70px;
+    height: 50px;
+}
+#north {
+    background: url('../images/afl-icons.jpg') -814px -242px;
+    width: 70px;
+    height: 48px;
+}
+#port {
+    background: url('../images/afl-icons.jpg') no-repeat -396px -242px;
+    width: 70px;
+    height: 50px;
+}
+#richmond {
+    background: url('../images/afl-icons.jpg') no-repeat -674px -98px;
+    width: 70px;
+    height: 50px;
+}
+#stkilda {
+    background: url('../images/afl-icons.jpg') no-repeat -396px -386px;
+    width: 70px;
+    height: 50px;
+}
+#sydney{
+    background: url('../images/afl-icons.jpg') no-repeat -814px -98px;
+    width: 70px;
+    height: 50px;
+}
+#wce {
+    background: url('../images/afl-icons.jpg') -115px -242px;
+    width: 70px;
+    height: 48px;
+}

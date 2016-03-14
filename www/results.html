@@ -1,0 +1,54 @@
+<ons-page modifier="material" ng-controller="resultsDB">
+
+    <ons-toolbar modifier="material">
+        <div class="left">
+            <ons-toolbar-button ng-click="app.slidingMenu.toggleMenu()" modifier="material"><ons-icon icon="bars" modifier="material"></ons-icon></ons-toolbar-button>
+        </div>
+        <div class="center">Results</div>
+    </ons-toolbar>
+    <div class="tab-bar tab-bar--top tab-bar--material">
+      <label class="tab-bar__item tab-bar--material__item">
+        <input ng-click="lastRound()" type="radio" name="tab-bar-material-a" checked="checked">
+        <button  class="tab-bar__button tab-bar--material__button">
+          Last Round
+        </button>
+      </label>
+    
+      <label class="tab-bar__item tab-bar--material__item">
+        <input ng-click="curRound()" type="radio" name="tab-bar-material-a">
+        <button   class="tab-bar__button tab-bar--material__button">
+          This Round
+        </button>
+      </label>
+    </div>
+
+    <div style="text-align: center">
+        <ons-list-header modifier="material">Round {{ roundNumber }} results</ons-list-header>
+    </div>
+    <div ng-show="loading" style="text-align: center"> 
+        Updating results please wait ...
+        <br>
+        <br>
+        <br>
+        <br>
+            <svg class="progress-circular" >
+                <circle class="progress-circular__primary" cx="50%" cy="50%" r="40%" fill="none" stroke-width="10%" stroke-miterlimit="20"/>
+            </svg>
+            <!-- <img id="mySpinner" width="100%" src="./images/progress.gif"  /> -->
+        </div> 
+    <ons-list modifier="material">
+        <ons-list-item ng-show="tRound" ng-repeat="result in results" modifier="material">
+            {{ result.match }}
+        </ons-list-item>
+        <ons-list-item ng-show="pRound" ng-repeat="result in previousResults" modifier="material">
+            {{ result.match }}
+        </ons-list-item>
+        <div style="text-align: center" ng-show="!results.length">
+            No Games have been played...
+            <br>
+            <br>
+            <button class="button button--material" onclick="app.slidingMenu.setMainPage('round.html', {closeMenu: true})">tipping</button>
+        </div>
+    </ons-list>
+
+</ons-page>

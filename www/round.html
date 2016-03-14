@@ -1,0 +1,44 @@
+<ons-page modifier="material">
+
+    <ons-toolbar modifier="material">
+        <div class="left">
+            <ons-toolbar-button ng-click="app.slidingMenu.toggleMenu()" modifier="material"><ons-icon icon="bars" modifier="material"></ons-icon></ons-toolbar-button>
+        </div>
+        <div class="center" ng-controller="drawJson">{{ userName() }} - Round {{ roundNumber }}</div>
+    </ons-toolbar>
+    <!--
+    <h2>Welcome {{user}}</h2>
+    -->
+        <div class="round" ng-controller="drawJson">
+            <div ng-repeat="game in draw | filter:{round:roundNumber}:true" ng-if="$index == activeIndex">
+                <div>
+                    <div ng-class="homeclass" ng-click="next(game.home)">
+                        <img class="teamImage" src="./images/{{game.home}}.jpg">
+                    </div>
+                    <div>
+                        vs
+                    </div>
+                    <div ng-class="awayclass" ng-click="next(game.away)">
+                        <img class="teamImage" src="./images/{{game.away}}.jpg">
+                    </div>
+                </div>
+            </div>
+        
+            <div id="results" ng-hide="hideResults">
+                <h3>{{ userName() }} tips</h3>
+                <ul class="list">                
+                    <li class="list__item" ng-repeat="select in selections">{{select}}</li>
+                </ul>
+                <span ng-show="saveMessage">Your tips have been saved</span>
+                <span ng-show="sendMessage">Tips Sent!</span>
+                <div>
+                    <button ng-click="saveTips()" ng-show="savetips" class="button button--material" >Save</button>
+                    &nbsp;
+                    <button ng-click="sendTips()" ng-show="sendtips" class="button button--material" >Send</button>
+                    &nbsp;
+                    <button ng-click="resetTips()" class="button button--material" >Reset</button>
+                </div>
+            </div>
+        </div>
+
+</ons-page>

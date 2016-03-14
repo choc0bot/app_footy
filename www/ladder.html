@@ -1,0 +1,24 @@
+<ons-page modifier="material" ng-controller="ladderDB">
+
+    <ons-toolbar modifier="material">
+        <div class="left">
+            <ons-toolbar-button ng-click="app.slidingMenu.toggleMenu()" modifier="material"><ons-icon icon="bars"></ons-icon></ons-toolbar-button>
+        </div>
+        <div class="center">Ladder</div>
+    </ons-toolbar>
+
+    <div style="text-align: center">
+        <ons-list-header modifier="material">Round {{ roundNumber }}</ons-list-header>
+    </div>
+    <div modifier="material">
+        <ons-row class="ladderRow" ng-repeat="team in ladder">
+            <ons-col width="30%">
+              <div><img id="{{ team.team_id }}"></div>
+            </ons-col>
+            <ons-col align="center">
+              <div><b>{{ team.team_id }}</b></div>
+            </ons-col>
+        </ons-row>
+    </div>
+
+</ons-page>
