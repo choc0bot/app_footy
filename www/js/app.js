@@ -338,6 +338,7 @@ function($scope, $http, userService, userIDService, roundService, FirebaseUrl, $
 
 myApp.controller("startUP", function($scope, $http, Groups, Users, roundService, userService, userIDService, groupService, deviceIDService, userPhotoService) {
     //roundService.set(1);
+    $scope.roundTipped = true;
     $scope.userName = userService.get();
     $scope.userPhoto = userPhotoService.get();
     $scope.loading = true;
@@ -426,9 +427,36 @@ myApp.controller("startUP", function($scope, $http, Groups, Users, roundService,
         userPhotoService.set(uPhoto);
         };
         
+    
+    //USES checktips() with checkIfUserExistsCallback to confirm seletion of exsiting tips.
+    $scope.confirm = function() {
+        console.log("confirm clicked");
+        checkTips();
+    };
+    
+    checkIfUserExistsCallback = function(exists) {
+        if (exists) {
+            console.log("ITS TRUE");
+            ons.notification.confirm({
+                message: 'If you want to  delete your tips and tip again click OK. </br></br>If you want to keep your tips click CANCEL',
+                modifier: 'material',
+                callback: function(idx) {
+                    switch (idx) {
+                      case 0:
+                        break;
+                      case 1:
+                        app.slidingMenu.setMainPage("round.html", {closeMenu: true});
+                        break;
+                    }
+                }
+            });
+        }
+        else {
+            app.slidingMenu.setMainPage("round.html", {closeMenu: true});
+        }
+    };   
    
-    $scope.checkTips = function() {
-        console.log("check Tips clicked");
+    checkTips = function() {
         userID = userIDService.get();
         userName = userService.get();
         roundNumber = roundService.get();
@@ -437,7 +465,7 @@ myApp.controller("startUP", function($scope, $http, Groups, Users, roundService,
         tipsRef.once('value', function(snapshot) {
         var exists = (snapshot.val() !== null);
         console.log("checkIfTipExists  - " + exists);
-        //tipExistsCallback(tipId, exists);
+        checkIfUserExistsCallback(exists);
       });
     };
     
@@ -563,6 +591,7 @@ myApp.controller("ladderDB", ["$scope", "roundService", "$firebaseArray",
 myApp.controller("tipsDB", ["$scope", "$route", "$timeout", "tipsFB", "resultsFB", "userService", "userIDService", "roundService","FirebaseUrl" ,"$firebaseArray",
     function($scope, $route, $timeout, tipsFB, resultsFB, userService, userIDService, roundService, FirebaseUrl , $firebaseArray) {
     $scope.loading = true;
+    $scope.enterTips = false;
     $scope.userName = userService.get();
     $scope.uID = userIDService.get();
     $scope.roundNumber= roundService.get();
@@ -579,6 +608,7 @@ myApp.controller("tipsDB", ["$scope", "$route", "$timeout", "tipsFB", "resultsFB
         console.log("getting results results length " + results.length);
         if (tips.length === 0) {
             return winners;
+            $scope.enterTips = true;
         }
         if (results.length === 0) {
             for(var i = 0; i < tips.length; i++){   
