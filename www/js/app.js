@@ -287,7 +287,6 @@ function($scope, $http, userService, userIDService, roundService, FirebaseUrl, $
     $scope.saveMessage = false;
     $scope.sendMessage = false;
     $scope.saveTips = function() {
-        checkIfTipExists();
         $scope.savetips = false;
         $scope.saveMessage = true;
         newName = userService.get();
@@ -298,6 +297,8 @@ function($scope, $http, userService, userIDService, roundService, FirebaseUrl, $
         fbURL = FirebaseUrl+ 'tips' + '/' + userID + '/' + newName + '/' + 'round' + roundNumber;
         console.log("save tips to "+fbURL);
         var ref = new Firebase(fbURL);
+        response = ref.remove()
+        console.log("removing existing at  "+fbURL);
         var tips = $firebaseArray(ref);
         $scope.tipArray = tips;
         var arrayLength = $scope.selections.length;
@@ -436,9 +437,8 @@ myApp.controller("startUP", function($scope, $http, Groups, Users, roundService,
     
     checkIfUserExistsCallback = function(exists) {
         if (exists) {
-            console.log("ITS TRUE");
             ons.notification.confirm({
-                message: 'If you want to  delete your tips and tip again click OK. </br></br>If you want to keep your tips click CANCEL',
+                message: 'You have already tipped for round'+ $scope.roundNumber + '. ' + 'Click OK If you want to keep overwrite your tips.',
                 modifier: 'material',
                 callback: function(idx) {
                     switch (idx) {
@@ -608,14 +608,16 @@ myApp.controller("tipsDB", ["$scope", "$route", "$timeout", "tipsFB", "resultsFB
         console.log("getting results results length " + results.length);
         if (tips.length === 0) {
             return winners;
-            $scope.enterTips = true;
+            $scope.enterTips = false;
         }
         if (results.length === 0) {
+            $scope.enterTips = true;
             for(var i = 0; i < tips.length; i++){   
-                    winners.push({team: tips[i].team_id});
+                winners.push({team: tips[i].team_id});
             }
         }
         else {
+            $scope.enterTips = true;
             for(var i = 0; i < results.length; i++){   
                 var s = results[i];
                 var n = s.match.indexOf(' ');
@@ -677,7 +679,7 @@ myApp.controller("tipsDB", ["$scope", "$route", "$timeout", "tipsFB", "resultsFB
                         console.log("Apply scope reload");
                         //$scope.$apply;
                         //$route.reload();
-                        $scope.loading = true;    
+                        $scope.loading = true;
                         var fburl = FirebaseUrl+ 'tips' + '/' + $scope.uID + '/' + $scope.userName + '/' + 'round' + roundNumber;
                         console.log("getting tips form "+ fburl);
                         var ref = new Firebase(fburl);
