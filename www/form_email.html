@@ -1,0 +1,34 @@
+
+<ons-page modifier="material">
+
+    <ons-toolbar modifier="material">
+        <div class="left">
+            <ons-toolbar-button modifier="material" ng-click="app.slidingMenu.toggleMenu()"><ons-icon icon="bars"></ons-icon></ons-toolbar-button>
+        </div>
+    </ons-toolbar>
+    
+        <div ng-controller="setting" style="text-align: center">
+            <form ng-submit="submitEmail()" modifier="material">
+                <br>
+                <h5>Enter a new email address</h5>
+                <p>
+                <input class="text-input--material" ng-model="newEmail" placeholder="enter email" type="email" required>
+                </p>
+                <br>
+                <br>
+                <br>
+                <button class="button button--material" type="submit" id="submit" value="Submit">Submit</button>
+            </form>
+                <br>
+                <button class="button button--material" onclick="app.slidingMenu.setMainPage('setting.html', {closeMenu: true})">Cancel</button>
+            
+            <div role="alert">
+            <span class="error" ng-show="myForm.input.$error.required">
+                Required!</span>
+            <span class="error" ng-show="myForm.input.$error.email">
+                Not valid email!</span>
+            </div>
+        
+    </div>
+
+</ons-page>

@@ -23,7 +23,7 @@
     </div>
 
     <div style="text-align: center">
-        <ons-list-header modifier="material">Round {{ roundNumber }} results</ons-list-header>
+        <ons-list-header modifier="material">Round {{ displayRoundNumber }} results</ons-list-header>
     </div>
     <div ng-show="loading" style="text-align: center"> 
         Updating results please wait ...
@@ -31,17 +31,17 @@
         <br>
         <br>
         <br>
-            <svg class="progress-circular" >
-                <circle class="progress-circular__primary" cx="50%" cy="50%" r="40%" fill="none" stroke-width="10%" stroke-miterlimit="20"/>
-            </svg>
-            <!-- <img id="mySpinner" width="100%" src="./images/progress.gif"  /> -->
-        </div> 
+        <svg class="progress-circular" >
+            <circle class="progress-circular__primary" cx="50%" cy="50%" r="40%" fill="none" stroke-width="10%" stroke-miterlimit="20"/>
+        </svg>
+        <!-- <img id="mySpinner" width="100%" src="./images/progress.gif"  /> -->
+    </div> 
     <ons-list modifier="material">
         <ons-list-item ng-show="tRound" ng-repeat="result in results" modifier="material">
             {{ result.match }}
         </ons-list-item>
-        <ons-list-item ng-show="pRound" ng-repeat="result in previousResults" modifier="material">
-            {{ result.match }}
+        <ons-list-item ng-show="pRound" ng-repeat="presult in previousResults" modifier="material">
+            {{ presult.match }}
         </ons-list-item>
         <div style="text-align: center" ng-show="!results.length">
             <br>

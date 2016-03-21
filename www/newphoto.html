@@ -5,43 +5,35 @@
         <div class="left">
             <ons-toolbar-button modifier="material" ng-click="app.slidingMenu.toggleMenu()"><ons-icon icon="bars"></ons-icon></ons-toolbar-button>
         </div>
-        <div class="center">Add user</div>
+        <div class="center">Change Photo</div>
     </ons-toolbar>
-        <h1>New User</h1>
         <div class="hidden" ng-controller="getGroup">{{ groupName }}</div>
-        <div ng-controller="userDB" style="text-align: center">
+        <div ng-controller="newPhoto" style="text-align: center">
             <form ng-submit="submitUser()" modifier="material">
                 <div id="myImage" class="profile-card">
-                    <img type="file" src="./images/smt.jpg" id="smallImage" class="profile-image">
+                    <img type="file" src="{{ userPhoto }}" id="smallImage" class="profile-image">
                 </div>
+                <br>
                 <br>
                 <ons-button class="fab" ng-click="submit = !submit" modifier="material" onclick="capturePhoto()">
                     <ons-icon icon="fa-camera" modifier="material"></ons-icon>
                 </ons-button>
                 <br>
                 <br>
-                    <input class="text-input--material" ng-model="name" type="text" placeholder="enter name" value=""  type="text" required>
-                <br>
-                <br>
                 <button ng-show="submit" class="button button--material" type="submit" id="submit" value="Submit">Submit</button>
+                <br>
+                <br>
             </form>
+                <button class="button button--material" onclick="app.slidingMenu.setMainPage('setting.html', {closeMenu: true})">Cancel</button>
             <div ng-show="loading" style="text-align: center"> 
-                Please wait while your user is created.
-                <br>
-                <br>
-                <br>
-                <br>
+                <p>
+                Please wait while your photo is uploaded.
+                </p>
                     <svg class="progress-circular" >
                         <circle class="progress-circular__primary" cx="50%" cy="50%" r="40%" fill="none" stroke-width="10%" stroke-miterlimit="20"/>
                     </svg>
                     <!-- <img id="mySpinner" width="100%" src="./images/progress.gif"  /> <--></-->
             </div> 
             </form>
-    
-    
-        <pre>
-        {{ message }}
-        </pre>
-
 
 </ons-page>

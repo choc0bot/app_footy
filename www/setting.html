@@ -9,7 +9,7 @@
 
   <ons-row class="profile-wrapper" modifier="material">
     <ons-col width="60px" class="profile-image-wrapper" modifier="material">
-      <img src="{{ users.photo }}" class="profile-image">
+      <img src="{{ userPhoto }}" class="profile-image">
     </ons-col>
 
     <ons-col modifier="material">
@@ -17,53 +17,46 @@
     </ons-col>
 
   </ons-row>
-
-  <div class="settings-header" modifier="material">Share</div>
-
   <ons-list modifier="inset" class="settings-list" modifier="material">
-    <ons-list-item modifier="material">
-      Notifications &nbsp;
-      <label class="switch switch--material">
-      <input type="checkbox" class="switch__input switch--material__input" checked>
-      <div class="switch__toggle switch--material__toggle">
-        <div class="switch__handle switch--material__handle"></div>
-      </div>
-    </label>
-    </ons-list-item>
-  </ons-list>
+        <ons-list-item class="list__header">
+            General
+        </ons-list-item>
+        <ons-list-item modifier="material">
+          Notifications &nbsp;
+          <label class="switch switch--material">
+          <input type="checkbox" class="switch__input switch--material__input" checked>
+          <div class="switch__toggle switch--material__toggle">
+            <div class="switch__handle switch--material__handle"></div>
+          </div>
+        </label>
+        </ons-list-item>
 
-  <div class="settings-header" modifier="material">Others</div>
+        <ons-list-item modifier="chevron" onclick="app.slidingMenu.setMainPage('form_email.html', {closeMenu: true})">
+         <div class="list__item__title">Change email</div>
+         <div class="list__item__subtitle">{{ email }}</div>
+        </ons-list-item>
 
-  <ons-list modifier="inset" class="settings-list" modifier="material">
-    <ons-list-item modifier="chevron">
-      Change Photo
-    </ons-list-item>
-  </ons-list>
-  <ons-list modifier="inset" class="settings-list" modifier="material">
-    <ons-list-item modifier="chevron">
-      Change Default Email to send tips
-    </ons-list-item>
-  </ons-list>
 
-  <br>
-
-  <ons-list modifier="inset" class="settings-list" modifier="material">
+        <ons-list-item class="list__header">
+            User
+        </ons-list-item>
+        
+        <ons-list-item modifier="chevron" modifier="tappable" onclick="app.slidingMenu.setMainPage('newphoto.html', {closeMenu: true})">
+          <ons-icon icon="fa-camera" modifier="material"></ons-icon>&nbsp; Change Photo
+        </ons-list-item>
   
-    <ons-list-item modifier="tappable" onclick="app.slidingMenu.setMainPage('users.html', {closeMenu: true})">
-      <ons-icon icon="ion-log-out" style="opacity: 0.8" modifier="material"></ons-icon>
-      Sign out
-    </ons-list-item>
-    
-  </ons-list>
-  
-  <br>
-  
-    <ons-list modifier="inset" class="settings-list" modifier="material">
-    <ons-list-item modifier="tappable" >
-      <ons-icon icon="ion-trash-a" style="opacity: 0.8" modifier="material"></ons-icon>
-      Delete User
-    </ons-list-item>
-  </ons-list>
+        <ons-list-item modifier="tappable" onclick="app.slidingMenu.setMainPage('users.html', {closeMenu: true})">
+          <ons-icon icon="fa-sign-out" modifier="material"></ons-icon>&nbsp; Sign out
+        </ons-list-item>
+        
+        <ons-list-item class="list__header">
+            Admin
+        </ons-list-item>
+        
+        <ons-list-item modifier="tappable" ng-click="deleteUser()">
+            <ons-icon icon="fa-trash" modifier="material"></ons-icon>&nbsp; Delete User
+        </ons-list-item>
+    </ons-list>
   
 </ons-page>
 

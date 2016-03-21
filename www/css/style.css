@@ -4,7 +4,7 @@
 .ladderRow {
   border-bottom: 1px solid #ccc;
 }
-.fab {
+.fabposition {
     right: 10px;
     position: fixed;
     bottom: 120px; /* Adjust to where you want it */
@@ -24,6 +24,29 @@
 .fa-times {
   color: red;
 }
+
+/* Settings */
+.list__header {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+  display: block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0 0 0 10px;
+  font-size: 15px;
+  font-weight: 500;
+  background-color: #eee;
+  color: #1f1f21;
+  text-shadow: none;
+  border-top: none;
+  border-bottom: none;
+  min-height: 24px;
+  line-height: 24px;
+}
+
 .selected {
     border-style: solid;
     border-width: 10px;
@@ -35,7 +58,7 @@
     animation-name: homeCycle; 
     animation-duration:6s; 
     animation-direction:alternate; 
-    animation-iteration-count:infinite; 
+    animation-iteration-count:infinite;
 
 -webkit-animation-name: homeCycle; 
 -webkit-animation-duration:6s; 

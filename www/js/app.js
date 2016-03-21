@@ -55,6 +55,24 @@ myApp.factory('userIDService', function() {
 
 });
 
+myApp.factory('emailService', function() {
+ var savedData = window.localStorage.getItem("sendMail");;
+ function set(data) {
+   savedData = data;
+   console.log("emailService saving " + savedData);
+ }
+ function get() {
+  console.log("emailService returning " + savedData);
+  return savedData;
+ }
+
+ return {
+  set: set,
+  get: get
+ };
+
+});
+
 myApp.factory('userPhotoService', function() {
  var savedData = {};
  function set(data) {
@@ -159,7 +177,7 @@ myApp.factory('resultsFB', ["roundService","FirebaseUrl" ,"$firebaseArray",
   //create, retrieve, update, destroy data from angularfire 
   roundNumber = roundService.get();
   console.log('results '+roundNumber);
-  var ref = new Firebase(FirebaseUrl+ 'results' + '/' + 'Round' + roundNumber);
+  var ref = new Firebase(FirebaseUrl+ 'results' + '/' + 'round' + roundNumber);
   var results = $firebaseArray(ref);
 
   return results;
@@ -169,8 +187,8 @@ myApp.factory('resultsFB', ["roundService","FirebaseUrl" ,"$firebaseArray",
 
 //CONTROLLERS
 
-myApp.controller('drawJson', ["$scope", "$http", "userService", "userIDService", "roundService", "FirebaseUrl", "$firebaseArray",
-function($scope, $http, userService, userIDService, roundService, FirebaseUrl, $firebaseArray) {
+myApp.controller('drawJson', ["$scope", "$http", "userService", "userIDService", "roundService", "emailService", "FirebaseUrl", "$firebaseArray",
+function($scope, $http, userService, userIDService, roundService, emailService, FirebaseUrl, $firebaseArray) {
     $scope.roundNumber = roundService.get();
     $http.get('draw2016.json', { cache: true}).then(function(res){
             $scope.draw = res.data;    
@@ -297,7 +315,7 @@ function($scope, $http, userService, userIDService, roundService, FirebaseUrl, $
         fbURL = FirebaseUrl+ 'tips' + '/' + userID + '/' + newName + '/' + 'round' + roundNumber;
         console.log("save tips to "+fbURL);
         var ref = new Firebase(fbURL);
-        response = ref.remove()
+        response = ref.remove();
         console.log("removing existing at  "+fbURL);
         var tips = $firebaseArray(ref);
         $scope.tipArray = tips;
@@ -312,17 +330,18 @@ function($scope, $http, userService, userIDService, roundService, FirebaseUrl, $
     $scope.sendtips = true;
     $scope.sendMessage = false;
     $scope.sendTips = function() {
-        $scope.snedtips = false;
+        $scope.sendtips = false;
         $scope.sendMessage = true;
         $scope.saveMessage = false;
         user = userService.get();
+        email = emailService.get();
         var arrayLength = $scope.selections.length;
         tip_email = "";
         for (var i = 0; i < arrayLength; i++) {
             tip_email = tip_email.concat($scope.selections[i] + "\r\n");
         }
         ebody = encodeURIComponent(tip_email);
-        window.location = "mailto:damon.fredrickson@gmail.com?subject=tips for " + user + " - Round " + $scope.roundNumber + "&body="+ ebody;
+        window.location = "mailto:"+ email + "?subject=tips for " + user + " - Round " + $scope.roundNumber + "&body="+ ebody;
     };
     
     $scope.resetTips = function() {
@@ -337,11 +356,12 @@ function($scope, $http, userService, userIDService, roundService, FirebaseUrl, $
     
 }]);
 
-myApp.controller("startUP", function($scope, $http, Groups, Users, roundService, userService, userIDService, groupService, deviceIDService, userPhotoService) {
+myApp.controller("startUP", function($scope, $http, Groups, Users, roundService, userService, userIDService, groupService, deviceIDService, userPhotoService, emailService) {
     //roundService.set(1);
     $scope.roundTipped = true;
     $scope.userName = userService.get();
     $scope.userPhoto = userPhotoService.get();
+    email = emailService.get();    
     $scope.loading = true;
     monaca.getDeviceId(function(id){
        deviceIDService.set(id);
@@ -438,7 +458,7 @@ myApp.controller("startUP", function($scope, $http, Groups, Users, roundService,
     checkIfUserExistsCallback = function(exists) {
         if (exists) {
             ons.notification.confirm({
-                message: 'You have already tipped for round'+ $scope.roundNumber + '. ' + 'Click OK If you want to keep overwrite your tips.',
+                message: 'You have already tipped for round '+ $scope.roundNumber + '. ' + 'Click OK If you want to keep overwrite your tips.',
                 modifier: 'material',
                 callback: function(idx) {
                     switch (idx) {
@@ -741,7 +761,7 @@ myApp.controller("resultsDB", ["roundService","$scope", "$firebaseArray",
     $scope.tRound = false;
     var rNumber = roundService.get();
     $scope.roundNumber = parseInt(rNumber, 8) - 1;
-    var ref = new Firebase("https://flickering-fire-9394.firebaseio.com/results/Round"+rNumber);
+    var ref = new Firebase("https://flickering-fire-9394.firebaseio.com/results/round"+rNumber);
     var obj = $firebaseArray(ref);
         //$scope.users = $firebaseArray(ref);
         obj.$loaded().then(function() {
@@ -751,7 +771,7 @@ myApp.controller("resultsDB", ["roundService","$scope", "$firebaseArray",
         });
     
     //GET previous round resuslts
-    var previousref = new Firebase("https://flickering-fire-9394.firebaseio.com/results/Round"+$scope.roundNumber);
+    var previousref = new Firebase("https://flickering-fire-9394.firebaseio.com/results/round"+$scope.roundNumber);
     var previousObj = $firebaseArray(previousref);
         //$scope.users = $firebaseArray(ref);
         previousObj.$loaded().then(function() {
@@ -762,28 +782,101 @@ myApp.controller("resultsDB", ["roundService","$scope", "$firebaseArray",
     
     //$scope.results = $firebaseArray(ref);  
      $scope.curRound = function() {
-        $scope.roundNumber = roundService.get();
-        console.log("Round number "+$scope.roundNumber);
+        $scope.displayRoundNumber = roundService.get();
+        console.log("Round number "+$scope.displayRoundNumber);
         $scope.pRound = false;
         $scope.tRound = true;
     };
     $scope.lastRound = function() {
         var rNumber = roundService.get();
-        $scope.roundNumber = parseInt(rNumber, 8) - 1;
-        console.log("Round number "+$scope.roundNumber);
+        $scope.displayRoundNumber = parseInt(rNumber, 8) - 1;
+        console.log("Round number "+$scope.displayRoundNumber);
         $scope.pRound = true;
         $scope.tRound = false;
     };
   }
 ]);
 
-myApp.controller("setting", function($scope, Users, userService, groupService) {
+myApp.controller("setting", function($scope, Users, userService, userIDService, groupService, userPhotoService, emailService, FirebaseUrl) {
     $scope.loading = true;
     //$scope.groupName = groupService.get();
         $scope.groupName = groupService.get();
         $scope.userName = userService.get();
+        $scope.userID = userIDService.get();
+        $scope.userPhoto = userPhotoService.get();
+        $scope.email = emailService.get();
         $scope.users = Users.all;
+        
+        $scope.submitEmail = function() {
+            var newEmail = $scope.newEmail;
+            window.localStorage.email = newEmail;
+            window.localStorage.setItem("sendMail", newEmail);
+            console.log("set email "+ newEmail);
+            $scope.email = newEmail;
+            emailService.set(newEmail);
+            app.slidingMenu.setMainPage("setting.html", {closeMenu: true});
+        };
+        
+        $scope.deleteUser = function () {
+            ons.notification.confirm({
+                message: 'Are you sure delete this user and all ther data?',
+                modifier: 'material',
+                callback: function(idx) {
+                    switch (idx) {
+                      case 0:
+                        break;
+                      case 1:
+                        fbURL = FirebaseUrl+ 'User' + '/' + $scope.userID;
+                        var ref = new Firebase(fbURL);
+                        response = ref.remove();
+                        console.log("removing existing user at  "+fbURL);
+                        app.slidingMenu.setMainPage("users.html", {closeMenu: true});
+                        break;
+                    }
+                }
+            });
+        };
 });
+
+//SETTINGS
+myApp.controller("newPhoto", ["$scope", "userIDService", "userService", "userPhotoService", "groupService", "emailService", "$firebaseArray", 
+    function($scope, userIDService, userService, userPhotoService, groupService, emailService, $firebaseArray) {
+        $scope.groupName = groupService.get();
+        $scope.userName = userService.get();
+        userID = userIDService.get();
+        console.log('USER ID = '+ userID);
+        $scope.userPhoto = userPhotoService.get();
+        $scope.loading = false;
+        $scope.submit = false;
+        $scope.email = emailService.get();
+        console.log("email is "+ $scope.email);
+        
+        var ref = new Firebase("https://flickering-fire-9394.firebaseio.com/User");
+        var list = $firebaseArray(ref);
+        //$scope.users = $firebaseArray(ref);
+        list.$loaded().then(function() {
+            userItem = list.$getRecord(userID);
+            console.log('USER item = '+ userItem);
+        });
+        
+        //ADD MESSAGE METHOD
+        $scope.submitUser = function() {
+            $scope.loading = true;
+            $scope.submit = false;
+            console.log("clicked submit");
+            $scope.photo = angular.element(document).find('img').attr('src');
+            //console.log($scope.photo);
+            if ($scope.photo) {
+                    userItem.photo = $scope.photo;
+                    list.$save(userItem).then(function(ref) {
+                        console.log('photo update');
+                        window.location = 'index.html';
+                    });
+            }
+        };
+        
+    }
+]);
 
 //CONFIG
 myApp.constant('FirebaseUrl', 'https://flickering-fire-9394.firebaseio.com/');

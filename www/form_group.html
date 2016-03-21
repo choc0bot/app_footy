@@ -8,8 +8,10 @@
     </ons-toolbar>
     
         <div ng-controller="groupDB" style="text-align: center">
-        <h3>This device hasn't joined a group</h3>
-        <h5>Enter an existing group name or type a name to create a new group</h5>
+        <h3>This device doesn't belong to a group</h3>
+        <h5>Enter an existing group to join</h5>
+        <h5>or</h5>
+        <h5>Submit the name of your new group<h5>
             <form ng-submit="submitGroup()" modifier="material">
                 <br>
                 <input class="text-input--material" ng-model="name" type="text"  placeholder="enter group name" value="" type="text" required>
