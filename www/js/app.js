@@ -638,16 +638,22 @@ myApp.controller("tipsDB", ["$scope", "$route", "$timeout", "tipsFB", "resultsFB
         }
         else {
             $scope.enterTips = true;
-            for(var i = 0; i < results.length; i++){   
-                var s = results[i];
-                var n = s.match.indexOf(' ');
-                winteam = s.match.substring(0, n != -1 ? n : s.length);
-                if (winteam === tips[i].team_id) {
-                    winners.push({team: tips[i].team_id, result: 'check'});
+            for(var i = 0; i < tips.length; i++){
+                if (results[i]) {
+                    var s = results[i];
+                    var n = s.match.indexOf(' ');
+                    winteam = s.match.substring(0, n != -1 ? n : s.length);
+                    if (winteam === tips[i].team_id) {
+                        winners.push({team: tips[i].team_id, result: 'check'});
+                    }
+                    else {
+                        winners.push({team: tips[i].team_id, result: 'times'});
+                    }
                 }
                 else {
-                    winners.push({team: tips[i].team_id, result: 'times'});
+                    winners.push({team: tips[i].team_id});
                 }
+                    
             }
         }
         return winners;
